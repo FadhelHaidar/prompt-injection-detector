@@ -1,13 +1,18 @@
 import time
+import logging
 from optimum.onnxruntime import ORTModelForSequenceClassification
 from transformers import AutoTokenizer, pipeline
 from .config import settings
+
+logger = logging.getLogger(__name__)
 
 class InjectionDetector:
     _instance = None
 
     def __init__(self):
-        print("Loading ONNX Model... This might take a moment.")
+        # print("Loading ONNX Model... This might take a moment.")
+        logger.info("Loading ONNX Model... This might take a moment.")
+
         self.tokenizer = AutoTokenizer.from_pretrained(
             settings.MODEL_ID, 
             subfolder=settings.MODEL_SUBFOLDER
@@ -27,7 +32,8 @@ class InjectionDetector:
             truncation=True,
             max_length=512,
         )
-        print("Model loaded successfully.")
+        # print("Model loaded successfully.")
+        logger.info("Model loaded successfully.")
 
     def predict(self, text: str) -> dict:
         start_time = time.time()

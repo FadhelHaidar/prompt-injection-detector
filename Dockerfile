@@ -30,8 +30,8 @@ ENV PYTHONUNBUFFERED=1 \
 WORKDIR /app
 
 # 1. Create non-root user
-RUN groupadd -g 10001 appuser && \
-    useradd -u 10001 -g appuser -s /bin/bash --no-create-home appuser
+RUN groupadd -g 1001 ut-dad && \
+    useradd -u 1001 -g 1001 -m -d /home/ut-dad -s /bin/bash ut-dad
 
 # 2. Install runtime dependencies AND debug tools
 #    We do this while still root.
