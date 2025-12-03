@@ -1,0 +1,18 @@
+[project]
+name = "prompt-injection-prevetion"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "azure-ai-contentsafety>=1.0.0",
+    "datasets>=4.4.1",
+    "fastapi>=0.123.5",
+    "huggingface-hub==0.36.0",
+    "llama-cpp-python>=0.3.16",
+    "optimum[onnxruntime]>=2.0.0",
+    "pydantic>=2.12.5",
+    "pydantic-settings>=2.12.0",
+    "python-dotenv>=1.2.1",
+    "uvicorn>=0.38.0",
+]
