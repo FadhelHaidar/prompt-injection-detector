@@ -25,7 +25,7 @@ class InjectionDetector:
             model=self.model,
             tokenizer=self.tokenizer,
             truncation=True,
-            max_length=settings.MAX_LENGTH,
+            max_length=512,
         )
         print("Model loaded successfully.")
 
