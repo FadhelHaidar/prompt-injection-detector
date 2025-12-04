@@ -13,4 +13,4 @@ To install UV, please refer to the official [UV Installation Tutorial](https://d
    ```bash
    uv run uvicorn src.main:app
    ```
-4. **The Visrtual Environtmennt is valid only for this folder**
+4. **The Virtual Environment is valid only for this folder**

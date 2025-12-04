@@ -10,7 +10,6 @@ class InjectionDetector:
     _instance = None
 
     def __init__(self):
-        # print("Loading ONNX Model... This might take a moment.")
         logger.info("Loading ONNX Model... This might take a moment.")
 
         self.tokenizer = AutoTokenizer.from_pretrained(
@@ -18,7 +17,7 @@ class InjectionDetector:
             subfolder=settings.MODEL_SUBFOLDER
         )
         self.tokenizer.model_input_names = ["input_ids", "attention_mask"]
-        
+
         self.model = ORTModelForSequenceClassification.from_pretrained(
             settings.MODEL_ID, 
             export=False, 
@@ -32,7 +31,6 @@ class InjectionDetector:
             truncation=True,
             max_length=512,
         )
-        # print("Model loaded successfully.")
         logger.info("Model loaded successfully.")
 
     def predict(self, text: str) -> dict:

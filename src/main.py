@@ -34,6 +34,26 @@ async def add_security_headers(request: Request, call_next):
 def health_check():
     return {"status": "running", "model": settings.MODEL_ID}
 
+@app.get("/health/live")
+def health_live():
+    return {
+        "status": "ready",
+        "details": {
+            "self": "up"
+        }
+    }
+
+@app.get("/health/ready")
+def health_ready():
+    return {
+        "status": "ready",
+        "details": {
+            "self": "up",
+            "openai": "up"  # depends
+        }
+    }
+
+
 @app.post("/analyze", response_model=AnalyzeResponse)
 def analyze_text(
     request: AnalyzeRequest, 

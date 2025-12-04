@@ -53,17 +53,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN mkdir -p /app/model_cache
 
 # 4. Copy files
-COPY --from=builder --chown=appuser:appuser /app/.venv /app/.venv
-COPY --chown=appuser:appuser src/ ./src
+COPY --from=builder --chown=ut-dad:ut-dad /app/.venv /app/.venv
+COPY --chown=ut-dad:ut-dad src/ ./src
 
 # 5. Ensure ownership
-RUN chown -R appuser:appuser /app
+RUN chown -R ut-dad:ut-dad /app
 
 # Expose port
 EXPOSE 8000
 
 # 6. Switch to non-root user
-USER appuser
+USER ut-dad
 
 # Run application
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]

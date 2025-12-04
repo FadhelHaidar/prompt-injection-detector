@@ -1,2 +1,48 @@
+# Environment
 .env
 .venv
+env/
+
+# Version control
+.git
+.gitignore
+.gitattributes
+
+# Python cache and build artifacts
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.tox/
+.coverage
+.hypothesis/
+
+# IDE and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Documentation
+docs/
+README.md
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.circleci/
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Testing (optional - remove if tests needed at runtime)
+test/
+tests/

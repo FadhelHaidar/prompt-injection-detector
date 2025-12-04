@@ -1,15 +1,12 @@
-import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import MagicMock, patch
 from src.main import app
 from src.predictor import get_detector, InjectionDetector
-from src.config import settings
 
 # 1. Setup TestClient
 client = TestClient(app)
 
 # 2. Mocking the Dependency
-# We create a mock class to replace the heavy InjectionDetector
 class MockInjectionDetector:
     def predict(self, text: str):
         # specific mock behavior for testing
@@ -75,10 +72,10 @@ def test_validation_error():
 
 # --- SERVICE LOGIC TESTS (Thresholding) ---
 
-@patch("app.services.ORTModelForSequenceClassification.from_pretrained")
-@patch("app.services.AutoTokenizer.from_pretrained")
-@patch("app.services.pipeline")
-def test_threshold_logic(mock_pipeline, mock_tokenizer, mock_model):
+@patch("src.predictor.pipeline")
+@patch("src.predictor.AutoTokenizer.from_pretrained")
+@patch("src.predictor.ORTModelForSequenceClassification.from_pretrained")
+def test_threshold_logic(mock_model, mock_tokenizer, mock_pipeline):
     """
     Test the internal logic of InjectionDetector without loading the real model.
     We mock the pipeline to return specific scores to test the threshold.
