@@ -36,8 +36,9 @@ def health_check():
 
 @app.get("/health/live")
 def health_live():
+    """Liveness probe - indicates if the service is running"""
     return {
-        "status": "ready",
+        "status": "alive",
         "details": {
             "self": "up"
         }
@@ -45,14 +46,20 @@ def health_live():
 
 @app.get("/health/ready")
 def health_ready():
-    return {
-        "status": "ready",
-        "details": {
-            "self": "up",
-            "openai": "up"  # depends
+    """Readiness probe - indicates if the service is ready to handle requests"""
+    try:
+        detector = get_detector()
+        if detector is None:
+            raise HTTPException(status_code=503, detail="Model not loaded")
+        return {
+            "status": "ready",
+            "details": {
+                "self": "up",
+                "model_loaded": True
+            }
         }
-    }
-
+    except Exception as e:
+        raise HTTPException(status_code=503, detail=f"Service not ready: {str(e)}")
 
 @app.post("/analyze", response_model=AnalyzeResponse)
 def analyze_text(
