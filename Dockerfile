@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # Stage 1: Builder (Unchanged)
 # -----------------------------------------------------------------------------
-FROM python:3.12-slim AS builder
+FROM public.ecr.aws/docker/library/python:3.12-slim AS builder
 
 # Copy uv
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
@@ -19,7 +19,7 @@ RUN uv sync --frozen --no-dev --no-install-project
 # -----------------------------------------------------------------------------
 # Stage 2: Runner (Final Image)
 # -----------------------------------------------------------------------------
-FROM python:3.12-slim
+FROM public.ecr.aws/docker/library/python:3.12-slim
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1 \

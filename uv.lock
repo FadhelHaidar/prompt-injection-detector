@@ -1577,6 +1577,7 @@ name = "prompt-injection-prevetion"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
+    { name = "aiohttp" },
     { name = "azure-ai-contentsafety" },
     { name = "datasets" },
     { name = "fastapi" },
@@ -1596,6 +1597,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "aiohttp", specifier = ">=3.13.2" },
     { name = "azure-ai-contentsafety", specifier = ">=1.0.0" },
     { name = "datasets", specifier = ">=4.4.1" },
     { name = "fastapi", specifier = ">=0.123.5" },

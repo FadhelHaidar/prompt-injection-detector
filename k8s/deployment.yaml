@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prompt-injection-detector
+  namespace: default
+  labels:
+    app: prompt-injection-detector
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: prompt-injection-detector
+  template:
+    metadata:
+      labels:
+        app: prompt-injection-detector
+    spec:
+      containers:
+      - name: app
+        image: prompt-injection-detector:latest
+        imagePullPolicy: IfNotPresent  # Works with local Docker Desktop images
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        - name: HF_HOME
+          value: "/app/model_cache"
+        
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+        
+        livenessProbe:
+          httpGet:
+            path: /health/live
+            port: 8000
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        
+        readinessProbe:
+          httpGet:
+            path: /health/ready
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        
+        volumeMounts:
+        - name: model-cache
+          mountPath: /app/model_cache
+      
+      volumes:
+      - name: model-cache
+        emptyDir: {}
